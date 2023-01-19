@@ -11,7 +11,7 @@ on:
       - 'app/**'
 
 jobs:
-  ci:
+  run-ci:
     runs-on: ubuntu-latest
     env:
       APP_DIR: app/
@@ -19,15 +19,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Detect Changes on Files
-        id: changes
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            any:
-              - '**'
-            app:
-              - 'app/**'
+      # - name: Detect Changes on Files
+      #   id: changes
+      #   uses: dorny/paths-filter@v2
+      #   with:
+      #     filters: |
+      #       any:
+      #         - '**'
+      #       app:
+      #         - 'app/**'
       - name: Setup Python
         if: steps.changes.outputs.api == 'true'
         uses: actions/setup-python@v2
