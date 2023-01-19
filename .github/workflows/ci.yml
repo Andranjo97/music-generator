@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - 'app/**'
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
 
 jobs:
   ci:
