@@ -1,0 +1,75 @@
+name: check pipeline
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'app/**'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    env:
+      APP_DIR: app/
+      PYTHON_VERSION: 3.9
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Detect Changes on Files
+        id: changes
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            any:
+              - '**'
+            app:
+              - 'app/**'
+      - name: Setup Python
+        if: steps.changes.outputs.api == 'true'
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+       - name: Install Poetry
+        if: steps.changes.outputs.api == 'true'
+        uses: snok/install-poetry@v1
+
+      - name: Configure Poetry and Install Dependencies
+        if: steps.changes.outputs.api == 'true'
+        run: |
+          poetry config --local
+          poetry install --no-interaction --no-root
+        working-directory: ./${{ env.APP_DIR }}
+      - name: Type Check with mypy
+        if: steps.changes.outputs.api == 'true' && github.event_name == 'pull_request'
+        run: |
+          source .venv/bin/activate
+          mypy app
+        working-directory: ./${{ env.API_DIR }}
+
+      - name: Test with pytest
+        if: steps.changes.outputs.api == 'true'
+        run: |
+          source .venv/bin/activate
+          python -m pytest -v
+        working-directory: ./${{ env.API_DIR }}
+
+      - name: Install pytest-cov
+        if: steps.changes.outputs.api == 'true'
+        run: |
+          source .venv/bin/activate
+          pip install pytest-cov
+        working-directory: ./${{ env.API_DIR }}
+
+      - name: Build coverage file
+        if: steps.changes.outputs.api == 'true'
+        run: |
+          source .venv/bin/activate
+          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov-config=.coveragerc --cov=app app/tests/ | tee pytest-coverage.txt
+        working-directory: ./${{ env.API_DIR }}
+
+      - name: Pytest coverage comment
+        if: steps.changes.outputs.api == 'true'
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./api/pytest-coverage.txt
+          junitxml-path: ./${{ env.API_DIR }}/pytest.xml
