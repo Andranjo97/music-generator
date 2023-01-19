@@ -6,7 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 EnvManager = get_settings()
 
-app = FastAPI(title='Music Generator')
+app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['*'] if EnvManager.is_dev() else [],
@@ -16,9 +16,5 @@ app.add_middleware(
     allow_headers=['*'],
     expose_headers=['X-Total-Count']
 )
-
-@app.get("/")
-async def get():
-    return {"app": "Music Generator", "version": "0.0.1", "backend": "lambda"}
 
 handler = Mangum(app)
