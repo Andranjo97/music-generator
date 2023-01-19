@@ -1,0 +1,3 @@
+[run]
+include = */app/*
+omit = *__init__*
