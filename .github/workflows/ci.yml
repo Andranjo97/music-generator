@@ -11,7 +11,7 @@ on:
       - 'app/**'
 
 jobs:
-  ci:
+  run-ci:
     runs-on: ubuntu-latest
     env:
       APP_DIR: app/
