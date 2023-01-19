@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - 'app/**'
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
 
 jobs:
   ci:
@@ -15,21 +19,21 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Detect Changes on Files
-        id: changes
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            any:
-              - '**'
-            app:
-              - 'app/**'
+      # - name: Detect Changes on Files
+      #   id: changes
+      #   uses: dorny/paths-filter@v2
+      #   with:
+      #     filters: |
+      #       any:
+      #         - '**'
+      #       app:
+      #         - 'app/**'
       - name: Setup Python
         if: steps.changes.outputs.api == 'true'
         uses: actions/setup-python@v2
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-       - name: Install Poetry
+      - name: Install Poetry
         if: steps.changes.outputs.api == 'true'
         uses: snok/install-poetry@v1
 
