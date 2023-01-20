@@ -1,10 +1,10 @@
 from unittest.mock import create_autospec
 
-from app.adapters import BaseAdapter
+from app.adapters import BaseServiceAdapter
 from app.domain.models import NoteProgression, Key, Note, Scale
 from app.domain.use_cases.progression_use_cases import ProgressionUseCases
 
-mock_adapter = create_autospec(BaseAdapter)
+mock_adapter = create_autospec(BaseServiceAdapter)
 use_cases = ProgressionUseCases(mock_adapter)
 
 def test__should_generate_note_progression():

@@ -1,8 +1,8 @@
-from .base_adapter import BaseAdapter
+from .base_service_adapter import BaseServiceAdapter
 
 from app.domain.models import NoteProgression, Key, Note, Scale
 
-class OpenAIAdapter(BaseAdapter):
+class OpenAIAdapter(BaseServiceAdapter):
   
   def get_note_progression(cls, key: Key, scale: Scale) -> NoteProgression:
     # TODO remove hard-coded return model
