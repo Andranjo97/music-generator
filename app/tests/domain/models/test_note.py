@@ -11,7 +11,7 @@ def test__should_return_music_note(valid_note):
 
 
 def test__should_return_music_note_with_default_pitch(note_key_no_pitch):
-  expected_note = Note(key='E', pitch=1)
+  expected_note = Note(key='E', pitch=3)
   assert expected_note == Note(key=note_key_no_pitch.get('key'), pitch=note_key_no_pitch.get('pitch'))
 
 

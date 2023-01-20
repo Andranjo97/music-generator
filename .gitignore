@@ -8,3 +8,6 @@ venv/
 .env
 
 .coverage
+
+notes/
+progressions/
