@@ -30,13 +30,9 @@ coverage report -m
 > **Warning**
 > Make sure you have docker installed
 
-To start the application, first create a docker image
+To start the application, run
 ```
-docker build -t music-generator -f Dockerfile.local .
+docker-compose up --build
 ```
 
-and then start your docker container with
-```
-docker run --name music-generator -p 8000:80 music-generator
-```
 the api should be running in [http://localhost:8000](http://localhost:8000)

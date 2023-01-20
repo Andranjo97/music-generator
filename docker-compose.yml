@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  music-generator-local:
+    container_name: music-generator-local
+    image: music-generator
+    ports:
+      - "8000:80"
+    build: 
+      context: "./"
+      dockerfile: ./Dockerfile.local
+    volumes:
+      - "./app:/api/app"

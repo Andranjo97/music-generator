@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from mangum import Mangum
 
 from .config.env_manager import get_settings
+from .config.routes_registerer import register_routers
 from starlette.middleware.cors import CORSMiddleware
 
 EnvManager = get_settings()
@@ -16,6 +17,8 @@ app.add_middleware(
     allow_headers=['*'],
     expose_headers=['X-Total-Count']
 )
+
+register_routers(app=app, routers_path='app.routers', stg_name='api')
 
 @app.get("/")
 async def get():
