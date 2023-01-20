@@ -1,6 +1,6 @@
 # This is the core code of music generator app
 
-## Versions
+## Requisites
 This project uses:
  - python 3.9
  - Docker 20.10
@@ -35,4 +35,4 @@ To start the application, run
 docker-compose up --build
 ```
 
-the api should be running in [http://localhost:8000](http://localhost:8000)
+the api should be running on [http://localhost:8000](http://localhost:8000)
