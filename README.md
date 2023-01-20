@@ -1,19 +1,19 @@
-## This is the core code of music generator app
+# This is the core code of music generator app
 
-# Versions
+## Versions
 This project uses:
  - python 3.9
  - Docker 20.10
 
-## Get started
+# Get started
 
-# Install dependencies
+## Install dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-# Test
+## Test
 
 To run tests use
 ```
@@ -25,7 +25,7 @@ To run coverage use
 coverage report -m
 ```
 
-# Start application
+## Start application
 
 > **Warning**
 > Make sure you have docker installed
