@@ -27,7 +27,7 @@ coverage report -m
 
 # Start application
 
-**warning**
+> **Warning**
 > Make sure you have docker installed
 
 To start the application, first create a docker image
