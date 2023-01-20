@@ -37,6 +37,6 @@ docker build -t music-generator -f Dockerfile.local .
 
 and then start your docker container with
 ```
-docker run -p 8000:80 music-generator
+docker run --name music-generator -p 8000:80 music-generator
 ```
 the api should be running in [http://localhost:8000](http://localhost:8000)
