@@ -30,6 +30,8 @@ coverage report -m
 > **Warning**
 > Make sure you have docker installed
 
+Set your environment variables. Check the `.env.example` for references.
+
 To start the application, run
 ```
 docker-compose up --build

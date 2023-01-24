@@ -7,6 +7,8 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
   ENV: str = 'DEV'
   OPENAI_API_KEY: str
+  AUDIO_FILES_URL: str
+  PROGRESSIONS_URL: str
   ALLOW_ORIGIN_REGEX: Optional[str]
 
   class Config:
