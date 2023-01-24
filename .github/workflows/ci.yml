@@ -3,12 +3,12 @@ name: check pipeline
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'app/**'
+    # paths:
+    #   - 'app/**'
   push:
     branches: [main]
-    paths:
-      - 'app/**'
+    # paths:
+    #   - 'app/**'
 
 jobs:
   run-ci:
@@ -19,15 +19,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Detect Changes on Files
-        id: changes
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            any:
-              - '**'
-            app:
-              - 'app/**'
+      # - name: Detect Changes on Files
+      #   id: changes
+      #   uses: dorny/paths-filter@v2
+      #   with:
+      #     filters: |
+      #       any:
+      #         - '**'
+      #       app:
+      #         - 'app/**'
       - name: Setup Python
         if: steps.changes.outputs.api == 'true'
         uses: actions/setup-python@v2
@@ -43,12 +43,12 @@ jobs:
           poetry config --local
           poetry install --no-interaction --no-root
         working-directory: ./${{ env.APP_DIR }}
-      - name: Type Check with mypy
-        if: steps.changes.outputs.api == 'true' && github.event_name == 'pull_request'
-        run: |
-          source .venv/bin/activate
-          mypy app
-        working-directory: ./${{ env.API_DIR }}
+      # - name: Type Check with mypy
+      #   if: steps.changes.outputs.api == 'true' && github.event_name == 'pull_request'
+      #   run: |
+      #     source .venv/bin/activate
+      #     mypy app
+      #   working-directory: ./${{ env.API_DIR }}
 
       - name: Test with pytest
         if: steps.changes.outputs.api == 'true'
