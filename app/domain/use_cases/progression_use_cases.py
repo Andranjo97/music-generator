@@ -1,5 +1,5 @@
 from app.adapters import BaseServiceAdapter, BaseAudioProcessorAdapter
-from app.domain.models import Scale, Key, NoteProgression
+from app.domain.models import Scale, Key, NoteProgressionResponse
 
 
 class ProgressionUseCases:
@@ -7,8 +7,14 @@ class ProgressionUseCases:
     cls.service = service
     cls.audio_processor = audio_processor
 
-  def generate_note_progression(cls, key: Key, scale: Scale) -> NoteProgression:
+  def generate_note_progression(cls, key: Key, scale: Scale) -> NoteProgressionResponse:
     note_progression = cls.service.get_note_progression(key=key, scale=scale)
+    progression_url = cls.audio_processor.merge_note_audio_files(note_progression.progression)
 
-    return note_progression
+    return NoteProgressionResponse(
+      scale=note_progression.scale,
+      key=note_progression.key,
+      progression=note_progression.progression,
+      url=progression_url
+    )
 

@@ -19,6 +19,7 @@ openai==0.26.1
 packaging==23.0
 pluggy==1.0.0
 pydantic==1.10.4
+pydub==0.25.1
 pytest==7.2.1
 python-dotenv==0.21.0
 requests==2.28.2
