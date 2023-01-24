@@ -1,3 +1,4 @@
+# type: ignore
 from pydub import AudioSegment
 from typing import List
 

@@ -1,5 +1,5 @@
+# type: ignore
 import pydub
-import pytest
 import unittest.mock
 
 from app.adapters import PydubAdapter, BaseAudioProcessorAdapter
