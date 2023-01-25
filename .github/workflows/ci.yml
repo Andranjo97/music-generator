@@ -48,7 +48,7 @@ jobs:
         run: |
           source .venv/bin/activate
           mypy app
-        working-directory: ./${{ env.APP_DIR }}
+        working-directory: ./
 
       - name: Test with pytest
         if: steps.changes.outputs.app == 'true'
