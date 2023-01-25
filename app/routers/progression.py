@@ -7,7 +7,10 @@ from app.domain.use_cases import ProgressionUseCases
 
 EnvManager = get_settings()
 
-service = OpenAIAdapter()
+service = OpenAIAdapter(
+  token=EnvManager.OPENAI_API_KEY,
+  model=EnvManager.OPENAI_MODEL,
+)
 audio_processor = PydubAdapter(
   input_url=EnvManager.AUDIO_FILES_URL,
   output_url=EnvManager.PROGRESSIONS_URL,

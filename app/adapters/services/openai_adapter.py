@@ -1,11 +1,28 @@
+import openai
+
 from .base_service_adapter import BaseServiceAdapter
 
 from app.domain.models import NoteProgression, Key, Note, Scale
 
 class OpenAIAdapter(BaseServiceAdapter):
   
+  def __init__(cls, token: str, model: str, temperature: int = 2, request_tokens: int = 10) -> None:
+    cls._model = model
+    cls._temperature = temperature
+    cls._request_tokens = request_tokens
+    openai.api_key = token
+    super().__init__()
+
+
   def get_note_progression(cls, key: Key, scale: Scale) -> NoteProgression:
-    # TODO remove hard-coded return model with real Open AI call
+    prompt = cls.generate_ai_prompt('notes', key, scale)
+    # response = openai.Completion.create(
+    #   model = cls._model,
+    #   max_tokens = cls._request_tokens,
+    #   temperature = cls._temperature,
+    #   prompt=prompt,
+    # )
+    # print('response', response['choices'][0])
 
     return NoteProgression(
       scale=scale,
@@ -13,5 +30,10 @@ class OpenAIAdapter(BaseServiceAdapter):
       progression=[Note(key=Key.E), Note(key=Key.F_sharp)]
     )
 
+
   def get_chord_progression(cls, key: Key, scale: Scale):
     pass
+
+
+  def generate_ai_prompt(cls, progression_type: str, key: Key, scale: Scale):
+    return 'Create a progression of 4 {0}, comma separated, with scientific pitch notation using the {1} scale of {2} with E as the base note'.format(progression_type, str(scale), str(key))

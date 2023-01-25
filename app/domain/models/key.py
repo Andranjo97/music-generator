@@ -13,3 +13,6 @@ class Key(Enum):
   A = 'A'
   A_sharp = 'A#'
   B = 'B'
+
+  def __str__(self) -> str:
+    return self.value
