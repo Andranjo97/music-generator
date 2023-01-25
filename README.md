@@ -10,7 +10,7 @@ This project uses:
 ## Install dependencies
 
 ```
-pip install -r requirements.txt
+poetry install
 ```
 
 ## Test
@@ -22,7 +22,7 @@ pytest .
 
 To run coverage use
 ```
-coverage report -m
+pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov-config=.coveragerc --cov=app app/tests/
 ```
 
 ## Start application
