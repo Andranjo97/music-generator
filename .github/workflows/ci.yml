@@ -13,6 +13,8 @@ on:
 jobs:
   run-ci:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     env:
       PYTHON_VERSION: 3.9
     steps:
