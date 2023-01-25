@@ -5,7 +5,7 @@ from app.domain.models import NoteProgression, Key, Note, Scale
 class OpenAIAdapter(BaseServiceAdapter):
   
   def get_note_progression(cls, key: Key, scale: Scale) -> NoteProgression:
-    # TODO remove hard-coded return model
+    # TODO remove hard-coded return model with real Open AI call
 
     return NoteProgression(
       scale=scale,

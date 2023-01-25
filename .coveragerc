@@ -1,6 +1,15 @@
 [run]
 include = */app/*
-omit = *__init__*
+omit = 
+    *__init__*
+    */app/routers/*
+    */app/config/*
+
 [report]
 exclude_lines =
     raise NotImplementedError
+
+omit = 
+    *__init__*
+    */app/routers/*
+    */app/config/*

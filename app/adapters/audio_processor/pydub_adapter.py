@@ -1,8 +1,4 @@
-import glob
-import sys
-import os
-
-from pydub import AudioSegment
+from pydub import AudioSegment # type: ignore
 from typing import List
 
 from app.domain.models import Note
