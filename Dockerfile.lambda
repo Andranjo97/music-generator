@@ -1,5 +1,17 @@
 FROM public.ecr.aws/lambda/python:3.8
+
+# copy backend
 COPY ./app ./app
-COPY ./requirements.txt ./requirements.txt
-RUN pip install -r ./requirements.txt
+
+# copy requirements
+COPY ./pyproject.toml ./poetry.lock
+
+# set up poetry
+ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
+RUN pip3 install poetry
+RUN poetry config virtualenvs.create false
+
+# install dependencies
+RUN poetry install --no-root --only main
+
 CMD ["app.main.handler"]

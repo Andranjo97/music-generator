@@ -3,11 +3,16 @@ FROM python:3.9
 # set the directory
 WORKDIR /api
 
-#  copy requirements
-COPY ./requirements.txt /api/requirements.txt
+# copy requirements
+COPY ./pyproject.toml ./poetry.lock /api/
 
-# install requirements
-RUN pip install --no-cache-dir --upgrade -r /api/requirements.txt
+# set up poetry
+ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
+RUN pip3 install poetry
+RUN poetry config virtualenvs.create false
+
+# install dependencies
+RUN cd /api && poetry install --no-root --only main
 
 # copy backend
 COPY . /api 
