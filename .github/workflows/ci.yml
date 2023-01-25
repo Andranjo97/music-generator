@@ -75,5 +75,5 @@ jobs:
         if: steps.changes.outputs.app == 'true'
         uses: MishaKav/pytest-coverage-comment@main
         with:
-          pytest-coverage-path: ./pytest-coverage.txt
-          junitxml-path: ./${{ env.APP_DIR }}pytest.xml
+          pytest-coverage-path: ./${{ env.APP_DIR }}/pytest-coverage.txt
+          junitxml-path: ./${{ env.APP_DIR }}/pytest.xml
