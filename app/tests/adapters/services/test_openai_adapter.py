@@ -1,15 +1,17 @@
 import pytest
+import openai
+import unittest.mock
 
 from app.adapters import BaseServiceAdapter, OpenAIAdapter
 from app.domain.models import NoteProgression, Key, Note, Scale
 
 
-def test_should_be_instance_of_base_adapter():
+def test__should_be_instance_of_base_adapter():
   openai_adapter = OpenAIAdapter(model='test-ai-model', token='some-token')
   assert isinstance(openai_adapter, BaseServiceAdapter)
 
 
-def test_should_generate_valid_prompt_if_strings():
+def test__should_generate_valid_prompt_if_strings():
   openai_adapter = OpenAIAdapter(model='test-ai-model', token='some-token')
   expected_prompt = 'Create a progression of 4 notes, comma separated, with scientific pitch notation using the chromatic scale of G with E as the base note'
 
@@ -18,7 +20,7 @@ def test_should_generate_valid_prompt_if_strings():
   assert result == expected_prompt
 
 
-def test_should_generate_valid_prompt_if_enums():
+def test__should_generate_valid_prompt_if_enums():
   openai_adapter = OpenAIAdapter(model='test-ai-model', token='some-token')
   expected_prompt = 'Create a progression of 4 notes, comma separated, with scientific pitch notation using the chromatic scale of G with E as the base note'
 
@@ -27,12 +29,21 @@ def test_should_generate_valid_prompt_if_enums():
   assert result == expected_prompt
 
 
-def test_should_return_note_progression():
+@unittest.mock.patch('openai.Completion')
+def test__should_return_note_progression(mock_openai_completion):
+  mock_openai_completion.create.return_value = {
+    'choices': [
+      {
+        'text': '\nE, G, D'
+      }
+    ]
+  }
+  
   openai_adapter = OpenAIAdapter(model='test-ai-model', token='some-token')
   expected_note_progression = NoteProgression(
     scale='major',
     key='E',
-    progression=[Note(key=Key.E), Note(key=Key.F_sharp)]
+    progression=[Note(key=Key.E), Note(key=Key.G), Note(key=Key.D)]
   )
 
   result = openai_adapter.get_note_progression(key='E', scale='major')

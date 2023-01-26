@@ -4,6 +4,7 @@ from .base_service_adapter import BaseServiceAdapter
 
 from app.domain.models import NoteProgression, Key, Note, Scale
 
+
 class OpenAIAdapter(BaseServiceAdapter):
   
   def __init__(cls, token: str, model: str, temperature: int = 2, request_tokens: int = 10) -> None:
@@ -15,20 +16,25 @@ class OpenAIAdapter(BaseServiceAdapter):
 
 
   def get_note_progression(cls, key: Key, scale: Scale) -> NoteProgression:
-    prompt = cls.generate_ai_prompt('notes', key, scale)
-    # response = openai.Completion.create(
-    #   model = cls._model,
-    #   max_tokens = cls._request_tokens,
-    #   temperature = cls._temperature,
-    #   prompt=prompt,
-    # )
-    # print('response', response['choices'][0])
+    try:
+      prompt = cls.generate_ai_prompt('notes', key, scale)
+      response = openai.Completion.create(
+        model = cls._model,
+        max_tokens = cls._request_tokens,
+        temperature = cls._temperature,
+        prompt=prompt,
+        stop='\n',
+      )
+      raw_progression = response['choices'][0]['text'].replace('\n', '').replace('#', '').split(',')
+      progression = [Note.parse_str(note) for note in raw_progression]
 
-    return NoteProgression(
-      scale=scale,
-      key=key,
-      progression=[Note(key=Key.E), Note(key=Key.F_sharp)]
-    )
+      return NoteProgression(
+        scale=scale,
+        key=key,
+        progression=progression
+      )
+    except Exception as e:
+      raise e
 
 
   def get_chord_progression(cls, key: Key, scale: Scale):
