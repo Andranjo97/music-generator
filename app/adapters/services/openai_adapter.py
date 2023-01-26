@@ -1,3 +1,4 @@
+import random
 import openai
 from typing import Optional
 
@@ -37,7 +38,7 @@ class OpenAIAdapter(BaseServiceAdapter):
         if note != None and note != 'None':
           progression.append(Note.parse_str(note))
 
-
+      random.shuffle(progression)
       return NoteProgression(
         scale=scale,
         key=key,
