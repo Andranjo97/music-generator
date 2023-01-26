@@ -4,6 +4,7 @@ omit =
     *__init__*
     */app/routers/*
     */app/config/*
+    */app/main.py
 
 [report]
 exclude_lines =
