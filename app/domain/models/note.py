@@ -24,7 +24,7 @@ class Note(BaseModel):
   def parse_str(cls, string_note: str) -> 'Note':
     raw_str = string_note.strip()
     pitch = int(re.sub('\D', '', raw_str) or '3')
-    key = re.sub('\d', '', raw_str)
+    key = Key[re.sub('\d', '', raw_str)]
 
     return Note(
       key=key,

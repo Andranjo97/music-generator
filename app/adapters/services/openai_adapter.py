@@ -16,7 +16,7 @@ class OpenAIAdapter(BaseServiceAdapter):
     super().__init__()
 
 
-  def get_note_progression(cls, key: Key, scale: Scale, base_key: Optional[Key] = Key.E) -> NoteProgression:
+  def get_note_progression(cls, key: Key, scale: Scale, base_key: Optional[Key] = None) -> NoteProgression:
     try:
       prompt = cls.generate_ai_prompt(
         progression_type='notes',
@@ -30,10 +30,13 @@ class OpenAIAdapter(BaseServiceAdapter):
         max_tokens = cls._request_tokens,
         temperature = cls._temperature,
         prompt=prompt,
-        stop='\n',
       )
-      raw_progression = response['choices'][0]['text'].replace('\n', '').replace('#', '').split(',')
-      progression = [Note.parse_str(note) for note in raw_progression]
+
+      progression = []
+      for note in response['choices'][0]['text'].replace('\n', '').replace('#', '').split(','):
+        if note != None and note != 'None':
+          progression.append(Note.parse_str(note))
+
 
       return NoteProgression(
         scale=scale,
@@ -48,5 +51,6 @@ class OpenAIAdapter(BaseServiceAdapter):
     pass
 
 
-  def generate_ai_prompt(cls, progression_type: str, key: Key, scale: Scale, base_key: Optional[Key] = Key.E):
+  def generate_ai_prompt(cls, progression_type: str, key: Key, scale: Scale, base_key: Optional[Key] = None):
+    base_key = base_key or key
     return 'Create a progression of 4 {0}, comma separated, with scientific pitch notation using the {1} scale of {2} with {3} as the base note'.format(progression_type, str(scale), str(key), str(base_key))

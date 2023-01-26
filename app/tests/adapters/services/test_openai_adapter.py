@@ -1,5 +1,4 @@
 import pytest
-import openai
 import unittest.mock
 
 from app.adapters import BaseServiceAdapter, OpenAIAdapter
@@ -53,6 +52,5 @@ def test__should_return_note_progression(mock_openai_completion):
     model='test-ai-model',
     max_tokens=10,
     temperature=1,
-    stop='\n',
     prompt='Create a progression of 4 notes, comma separated, with scientific pitch notation using the major scale of E with E as the base note'
   )
