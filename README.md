@@ -7,6 +7,11 @@ This project uses:
 
 # Get started
 
+## Init venv
+```
+poetry shell
+```
+
 ## Install dependencies
 
 ```
@@ -22,7 +27,7 @@ pytest .
 
 To run coverage use
 ```
-pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov-config=.coveragerc --cov=app app/tests/
+pytest --cov-report=term-missing:skip-covered --cov-config=.coveragerc --cov=app app/tests/
 ```
 
 ## Start application

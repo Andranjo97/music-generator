@@ -13,27 +13,28 @@ use_cases = ProgressionUseCases(
 
 
 def test__should_generate_note_progression():
+  key = Key.E
   base_key = Key.E
   scale = Scale.major
   progression = [Note(key=Key.E), Note(key=Key.F_sharp)]
   url = '/test/url'
   expected_response = NoteProgressionResponse(
     scale=scale,
-    key=base_key,
+    key=key,
     progression=progression,
     url=url,
   )
 
   mock_service_adapter.get_note_progression.return_value = NoteProgression(
     scale=scale,
-    key=base_key,
+    key=key,
     progression=progression
   )
   mock_audio_adapter.merge_note_audio_files.return_value = '/test/url'
 
-  result = use_cases.generate_note_progression(key=base_key, scale=scale)
+  result = use_cases.generate_note_progression(key=key, scale=scale, base_key=base_key)
 
   assert expected_response == result
-  mock_service_adapter.get_note_progression.assert_called_once_with(key=base_key, scale=scale)
+  mock_service_adapter.get_note_progression.assert_called_once_with(key=key, scale=scale, base_key=base_key)
   mock_audio_adapter.merge_note_audio_files.assert_called_once_with(progression=progression)
 

@@ -8,6 +8,13 @@ def valid_note():
   }
 
 @pytest.fixture
+def valid_sharp_note():
+  return {
+    'key': 'C#',
+    'pitch': 2,
+  }
+
+@pytest.fixture
 def note_key_no_pitch():
   return {
     'key': 'E',
