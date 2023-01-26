@@ -22,4 +22,4 @@ use_cases = ProgressionUseCases(service, audio_processor)
 
 @progressions.post('/notes', name='generate_notes_progression', response_model=NoteProgressionResponse)
 async def generate_notes_progression(request: NotesProgressionRequest):
-  return use_cases.generate_note_progression(key=request.key, scale=request.scale)
+  return use_cases.generate_note_progression(key=request.key, scale=request.scale, base_key=request.base_key)

@@ -15,9 +15,17 @@ class OpenAIAdapter(BaseServiceAdapter):
     super().__init__()
 
 
-  def get_note_progression(cls, key: Key, scale: Scale) -> NoteProgression:
+  def get_note_progression(cls, key: Key, scale: Scale, base_key: Key = Key.E) -> NoteProgression:
     try:
-      prompt = cls.generate_ai_prompt('notes', key, scale)
+      prompt = cls.generate_ai_prompt(
+        progression_type='notes',
+        key=key, 
+        scale=scale, 
+        base_key=base_key
+      )
+
+      print('???>>>>prompt', prompt)
+
       response = openai.Completion.create(
         model = cls._model,
         max_tokens = cls._request_tokens,
@@ -37,9 +45,10 @@ class OpenAIAdapter(BaseServiceAdapter):
       raise e
 
 
-  def get_chord_progression(cls, key: Key, scale: Scale):
+  def get_chord_progression(cls, key: Key, scale: Scale, base_key: Key = Key.E):
     pass
 
 
-  def generate_ai_prompt(cls, progression_type: str, key: Key, scale: Scale):
-    return 'Create a progression of 4 {0}, comma separated, with scientific pitch notation using the {1} scale of {2} with E as the base note'.format(progression_type, str(scale), str(key))
+  def generate_ai_prompt(cls, progression_type: str, key: Key, scale: Scale, base_key: Key):
+    print('IN PROMPT GENEREATION', base_key)
+    return 'Create a progression of 4 {0}, comma separated, with scientific pitch notation using the {1} scale of {2} with {3} as the base note'.format(progression_type, str(scale), str(key), str(base_key))
