@@ -6,7 +6,7 @@ class NotFlatKeyException(Exception):
 
 
 class KeyEnumMeta(EnumMeta):
-  def __getitem__(self, name: str) -> 'Key':
+  def __getitem__(self, name: str):
     symbol = '#' if '#' in name else '♯'
 
     if Key.is_flat(name):
