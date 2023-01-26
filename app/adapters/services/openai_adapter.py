@@ -7,7 +7,7 @@ from app.domain.models import NoteProgression, Key, Note, Scale
 
 class OpenAIAdapter(BaseServiceAdapter):
   
-  def __init__(cls, token: str, model: str, temperature: int = 2, request_tokens: int = 10) -> None:
+  def __init__(cls, token: str, model: str, temperature: int = 1, request_tokens: int = 10) -> None:
     cls._model = model
     cls._temperature = temperature
     cls._request_tokens = request_tokens
