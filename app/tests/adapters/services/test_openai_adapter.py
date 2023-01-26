@@ -28,7 +28,11 @@ def test__should_generate_valid_prompt_if_enums():
   assert result == expected_prompt
 
 
+def random_shuffle(list):
+  list = [Note(key=Key.E), Note(key=Key.G), Note(key=Key.D)]
+
 @unittest.mock.patch('openai.Completion')
+@unittest.mock.patch('random.shuffle', random_shuffle)
 def test__should_return_note_progression(mock_openai_completion):
   mock_openai_completion.create.return_value = {
     'choices': [
